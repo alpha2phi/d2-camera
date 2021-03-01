@@ -1,0 +1,10 @@
+einops
+fire
+ftfy
+opencv-python
+regex
+rich
+torch
+torch_optimizer
+torchvision
+tqdm
