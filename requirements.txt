@@ -1,6 +1,8 @@
+Pillow
 einops
 fire
 ftfy
+numpy
 opencv-python
 regex
 rich
