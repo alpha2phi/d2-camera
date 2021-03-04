@@ -1,8 +1,13 @@
-import numpy as np
+import sys
 import cv2 as cv
 import logging
+import torch
+import torchvision
 
 logging.basicConfig(stream=sys.stdout, level=logging.INFO)
+gpu = torch.cuda.is_available()
+logging.info(f"GPU available - { gpu }")
+
 
 cap = cv.VideoCapture(0)
 
