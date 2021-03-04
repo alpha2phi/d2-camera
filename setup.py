@@ -1,20 +1,20 @@
 import sys
 from setuptools import setup, find_packages
 
-sys.path[0:0] = ["deep_daze"]
+sys.path[0:0] = ["d2_camera"]
 from version import __version__
 
 setup(
-    name="deep-daze",
+    name="d2-camera",
     packages=find_packages(),
     include_package_data=True,
-    entry_points={"console_scripts": ["imagine = deep_daze.cli:main",],},
+    entry_points={"console_scripts": ["d2 = d2_camera.cli:main",],},
     version=__version__,
     license="MIT",
-    description="Deep Daze",
-    author="Ryan Murdock, Phil Wang",
-    author_email="lucidrains@gmail.com",
-    url="https://github.com/lucidrains/deep-daze",
+    description="D2 Camera",
+    author="alpha2phi",
+    author_email="alpha2phi@gmail.com",
+    url="https://github.com/alpha2phi/d2-camera",
     keywords=[
         "artificial intelligence",
         "deep learning",
@@ -38,6 +38,6 @@ setup(
         "Intended Audience :: Developers",
         "Topic :: Scientific/Engineering :: Artificial Intelligence",
         "License :: OSI Approved :: MIT License",
-        "Programming Language :: Python :: 3.6",
+        "Programming Language :: Python :: 3.7",
     ],
 )
