@@ -1,2 +1,2 @@
-from d2_camera import *
+from .cli import main, cli
 
