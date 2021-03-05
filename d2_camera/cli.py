@@ -4,6 +4,10 @@ import fire
 
 
 def cli():
+    """
+    CLI entry point.
+
+    """
     if any("--help" in arg for arg in sys.argv):
         print("Type `d2 --help` for usage info.")
         sys.exit()

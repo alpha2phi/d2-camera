@@ -25,7 +25,6 @@ setup(
         "Pillow",
         "fire",
         "ftfy",
-        "git+https://github.com/facebookresearch/detectron2.git",
         "numpy",
         "opencv-python",
         "rich",
@@ -34,6 +33,7 @@ setup(
         "torch_optimizer",
         "torchvision",
     ],
+    extras_require={},
     classifiers=[
         "Development Status :: 4 - Beta",
         "Intended Audience :: Developers",
