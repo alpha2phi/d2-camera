@@ -17,4 +17,4 @@ def main():
     """
     Main function.
     """
-    fire.Fire(start)
+    fire.Fire(cli)

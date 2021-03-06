@@ -27,6 +27,7 @@ setup(
         "ftfy",
         "numpy",
         "opencv-python",
+        "pyyaml",
         "rich",
         "tqdm",
         "torch",
