@@ -1,6 +1,6 @@
 import unittest
 
-from d2_camera import cli
+from d2_camera import object_detection
 
 
 class TestCli(unittest.TestCase):
@@ -14,4 +14,4 @@ class TestCli(unittest.TestCase):
         pass
 
     def test_name(self):
-        cli()
+        object_detection()

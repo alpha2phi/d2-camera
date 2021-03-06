@@ -25,7 +25,7 @@ def object_detection():
 
         # If frame is read correctly ret is True
         if not ret:
-            logging.error("Can't receive frame (stream end?). Exiting ...")
+            logging.error("Can't receive frame. Exiting ...")
             break
 
         # Our operations on the frame come here
