@@ -1,26 +1,29 @@
 import json
 import logging
+import multiprocessing as mp
 import os
 import random
 import sys
 
 import cv2 as cv
 import detectron2
+from detectron2 import model_zoo
+from detectron2.config import get_cfg
+from detectron2.data import DatasetCatalog, MetadataCatalog
+from detectron2.engine import DefaultPredictor
 from detectron2.utils.logger import setup_logger
+from detectron2.utils.visualizer import Visualizer
 import numpy as np
 import torch
 import torchvision
-from detectron2 import model_zoo
-from detectron2.engine import DefaultPredictor
-from detectron2.config import get_cfg
-from detectron2.utils.visualizer import Visualizer
-from detectron2.data import MetadataCatalog, DatasetCatalog
 
 setup_logger()
 
-
 # Log to stdout
 logging.basicConfig(stream=sys.stdout, level=logging.INFO)
+
+# Number of processors
+logging.info(f"Number of processors: { mp.cpu_count() } ")
 
 # GPU is available
 gpu = torch.cuda.is_available()
@@ -48,6 +51,9 @@ predictor = DefaultPredictor(cfg)
 
 
 def video_capture():
+    """
+    Video capture.
+    """
     # Default video capture
     cap = cv.VideoCapture(0)
     if not cap.isOpened():
@@ -74,6 +80,11 @@ def video_capture():
 
 
 def object_detection(frame):
+    """
+    Real time object detection.
+
+    :param frame Image: Image frame.
+    """
     # Our operations on the frame come here
     outputs = predictor(frame)
     logging.debug(outputs["instances"].pred_classes)
