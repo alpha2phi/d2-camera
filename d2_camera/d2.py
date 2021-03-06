@@ -13,6 +13,7 @@ from detectron2.data import DatasetCatalog, MetadataCatalog
 from detectron2.engine import DefaultPredictor
 from detectron2.utils.logger import setup_logger
 from detectron2.utils.visualizer import Visualizer
+from multiprocessing import Process
 import numpy as np
 import torch
 import torchvision
@@ -49,6 +50,8 @@ if not gpu:
 
 predictor = DefaultPredictor(cfg)
 
+detecting = False
+
 
 def video_capture():
     """
@@ -71,6 +74,10 @@ def video_capture():
 
         cv.imshow("frame", frame)
 
+        # if not detecting:
+        #     p = Process(target=object_detection, args=(frame,))
+        #     p.start()
+
         if cv.waitKey(1) == ord("q"):
             break
 
@@ -85,6 +92,9 @@ def object_detection(frame):
 
     :param frame Image: Image frame.
     """
+    global detecting
+    detecting = True
+
     # Our operations on the frame come here
     outputs = predictor(frame)
     logging.debug(outputs["instances"].pred_classes)
@@ -95,5 +105,7 @@ def object_detection(frame):
         frame[:, :, ::-1], MetadataCatalog.get(cfg.DATASETS.TRAIN[0]), scale=1.2
     )
     out = v.draw_instance_predictions(outputs["instances"].to("cpu"))
-    cv.imshow("frame", out.get_image()[:, :, ::-1])
+    cv.imshow("object", out.get_image()[:, :, ::-1])
+
+    detecting = False
 
