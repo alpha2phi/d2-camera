@@ -2,7 +2,6 @@ import logging
 import multiprocessing as mp
 from multiprocessing import Process, Queue
 import sys
-import os
 
 import cv2
 from detectron2 import model_zoo
