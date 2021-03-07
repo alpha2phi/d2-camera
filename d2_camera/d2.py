@@ -4,6 +4,7 @@ from multiprocessing import Process, Queue
 import sys
 
 import cv2
+from detectron2.data import MetadataCatalog
 from detectron2 import model_zoo
 from detectron2.config import get_cfg
 from detectron2.engine import DefaultPredictor

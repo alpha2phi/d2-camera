@@ -1,6 +1,4 @@
-from d2_camera.d2 import video_capture
 import unittest
-
 from d2_camera import video_capture
 
 
