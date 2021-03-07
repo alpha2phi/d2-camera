@@ -1,23 +1,15 @@
-import json
 import logging
 import multiprocessing as mp
 from multiprocessing import Process, Queue
-import os
-import random
 import sys
-import time
 
 import cv2
-import detectron2
 from detectron2 import model_zoo
 from detectron2.config import get_cfg
-from detectron2.data import DatasetCatalog, MetadataCatalog
 from detectron2.engine import DefaultPredictor
 from detectron2.utils.logger import setup_logger
 from detectron2.utils.visualizer import Visualizer
-import numpy as np
 import torch
-import torchvision
 
 setup_logger()
 
