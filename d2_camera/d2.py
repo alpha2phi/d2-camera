@@ -22,7 +22,9 @@ import torchvision
 setup_logger()
 
 # Log to stdout
-logging.basicConfig(stream=sys.stdout, level=logging.INFO)
+logging.basicConfig(
+    stream=sys.stdout, level=logging.INFO, format="%(asctime)s - %(message)s"
+)
 
 # Number of processors
 logging.info(f"Number of processors: { mp.cpu_count() } ")
@@ -112,8 +114,8 @@ def object_detection(input_q, output_q):
 
         # Our operations on the frame come here
         outputs = predictor(frame)
-        logging.debug(outputs["instances"].pred_classes)
-        logging.debug(outputs["instances"].pred_boxes)
+        # logging.debug(outputs["instances"].pred_classes)
+        # logging.debug(outputs["instances"].pred_boxes)
 
         # Display the resulting frame
         v = Visualizer(
