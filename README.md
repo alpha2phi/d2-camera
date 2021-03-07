@@ -12,5 +12,6 @@ Real-time object detection and segmentation using Facebook Detectron2 library.
 * Type *d2* to start the application
 * Type *q* to quit the application
 
+Read the [Medium article](https://alpha2phi.medium.com/object-detection-and-segmentation-using-detectron2-ac5bce45a391) for more details!
 
 ![Sample Image](test_images/output.png "Sample Image")
