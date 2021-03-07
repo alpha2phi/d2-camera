@@ -1,6 +1,7 @@
 import json
 import logging
 import multiprocessing as mp
+from multiprocessing import Process, Queue
 import os
 import random
 import sys
@@ -14,7 +15,6 @@ from detectron2.data import DatasetCatalog, MetadataCatalog
 from detectron2.engine import DefaultPredictor
 from detectron2.utils.logger import setup_logger
 from detectron2.utils.visualizer import Visualizer
-from multiprocessing import Process, Queue
 import numpy as np
 import torch
 import torchvision
@@ -62,11 +62,15 @@ def video_capture():
         logging.error("Cannot open camera")
         exit()
 
-    queue = Queue()
-    process = Process(target=object_detection, args=(queue,))
+    input_q = Queue()
+    output_q = Queue()
+    process = Process(target=object_detection, args=(input_q, output_q))
     process.start()
+    processed_frame = None
 
-    cv2.namedWindow("frame1")
+    cv2.namedWindow("main")
+    cv2.namedWindow("object")
+
     while True:
         # Capture frame-by-frame
         ret, frame = cap.read()
@@ -76,14 +80,21 @@ def video_capture():
             logging.error("Can't receive frame. Exiting ...")
             break
 
-        # cv2.imshow("frame1", frame)
+        if input_q.empty():
+            input_q.put(frame)
 
-        if queue.empty():
-            queue.put(frame)
+        concat_frame = frame
+        if not output_q.empty():
+            processed_frame = output_q.get()
+            cv2.imshow("object", processed_frame)
+
+        cv2.imshow("main", frame)
 
         if cv2.waitKey(1) == ord("q"):
-            queue.close()
-            queue.join_thread()
+            input_q.close()
+            output_q.close()
+            input_q.join_thread()
+            output_q.join_thread()
             process.terminate()
             break
 
@@ -92,16 +103,12 @@ def video_capture():
     cv2.destroyAllWindows()
 
 
-def object_detection(queue):
-    """
-    Real time object detection.
-
-    :param frame Image: Image frame.
-    """
-
-    cv2.namedWindow("frame2")
+def object_detection(input_q, output_q):
     while True:
-        frame = queue.get()
+        if input_q.empty():
+            continue
+
+        frame = input_q.get()
 
         # Our operations on the frame come here
         outputs = predictor(frame)
@@ -113,5 +120,4 @@ def object_detection(queue):
             frame[:, :, ::-1], MetadataCatalog.get(cfg.DATASETS.TRAIN[0]), scale=1.2
         )
         out = v.draw_instance_predictions(outputs["instances"].to("cpu"))
-        cv2.imshow("frame2", out.get_image()[:, :, ::-1])
-
+        output_q.put(out.get_image()[:, :, ::-1])
